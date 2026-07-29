@@ -1,0 +1,23 @@
+{
+  "name": "3s-standard-sharing-software",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "3S - Standard Sharing Software. A dependency-free full-stack JavaScript app for testing DevOps automation.",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "3s",
+    "standard-sharing-software",
+    "node",
+    "fullstack",
+    "cloudmind-test"
+  ],
+  "author": "CloudMind Demo",
+  "license": "MIT"
+}

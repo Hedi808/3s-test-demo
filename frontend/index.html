@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3S — Standard Sharing Software</title>
+    <meta
+      name="description"
+      content="3S is a beautiful full-stack sharing software demo for testing CloudMind DevOps automation."
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <div class="background-glow background-glow-one"></div>
+    <div class="background-glow background-glow-two"></div>
+    <div class="background-grid"></div>
+
+    <main class="app-shell">
+      <nav class="topbar">
+        <a class="brand" href="/">
+          <span class="brand-mark">3S</span>
+          <span>
+            <strong>Standard Sharing Software</strong>
+            <small>CloudMind test app</small>
+          </span>
+        </a>
+
+        <div class="topbar-actions">
+          <span id="connectionBadge" class="connection-badge">
+            <span class="connection-dot"></span>
+            Checking API
+          </span>
+
+          <a class="mini-link" href="/api/status" target="_blank" rel="noreferrer">
+            Health endpoint
+          </a>
+        </div>
+      </nav>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">3S Sharing Platform</p>
+
+          <h1>Share resources with a cleaner software workspace.</h1>
+
+          <p class="hero-text">
+            3S is a lightweight full-stack demo for documents, links, checklists,
+            repositories, and technical notes. It is intentionally simple so CloudMind
+            can analyze it, containerize it, generate DevOps assets, and deploy it.
+          </p>
+
+          <div class="hero-actions">
+            <button id="refreshButton" class="button button-primary" type="button">
+              Refresh workspace
+            </button>
+
+            <button id="scrollToFormButton" class="button button-secondary" type="button">
+              Add resource
+            </button>
+          </div>
+
+          <div class="hero-pills">
+            <span>Node.js native HTTP</span>
+            <span>Port 3000</span>
+            <span>/api/status</span>
+            <span>No dependencies</span>
+          </div>
+        </div>
+
+        <aside class="runtime-card">
+          <div class="runtime-card-header">
+            <div>
+              <p class="eyebrow">Runtime</p>
+              <h2 id="runtimeStatus">Checking...</h2>
+            </div>
+
+            <span class="runtime-orb">
+              <span class="runtime-orb-inner"></span>
+            </span>
+          </div>
+
+          <p id="runtimeMessage" class="runtime-message">
+            Connecting to the 3S backend.
+          </p>
+
+          <div class="runtime-grid">
+            <div>
+              <span>Service</span>
+              <strong>3S API</strong>
+            </div>
+
+            <div>
+              <span>Port</span>
+              <strong id="runtimePort">—</strong>
+            </div>
+
+            <div>
+              <span>Health</span>
+              <strong>/api/status</strong>
+            </div>
+
+            <div>
+              <span>Mode</span>
+              <strong>Demo</strong>
+            </div>
+          </div>
+
+          <div class="runtime-terminal">
+            <div class="terminal-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <code id="runtimeTerminalText">waiting for status...</code>
+          </div>
+        </aside>
+      </section>
+
+      <section class="metrics-grid" aria-label="Workspace metrics">
+        <article class="metric-card">
+          <div class="metric-icon">↗</div>
+          <span>Total shares</span>
+          <strong id="totalShares">0</strong>
+          <small>Resources currently stored in memory</small>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-icon">◇</div>
+          <span>Resource types</span>
+          <strong id="totalTypes">0</strong>
+          <small>Documents, links, checklists, repos, notes</small>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-icon">◎</div>
+          <span>Owners</span>
+          <strong id="totalOwners">0</strong>
+          <small>People or teams sharing resources</small>
+        </article>
+
+        <article class="metric-card metric-card-accent">
+          <div class="metric-icon">✓</div>
+          <span>Health check</span>
+          <strong id="healthMetric">—</strong>
+          <small>Used by CloudMind for deployment verification</small>
+        </article>
+      </section>
+
+      <section class="workspace-grid">
+        <aside class="create-panel" id="createPanel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Create</p>
+              <h2>New shared resource</h2>
+            </div>
+          </div>
+
+          <form id="shareForm" class="share-form">
+            <label>
+              <span>Title</span>
+              <input
+                id="titleInput"
+                name="title"
+                type="text"
+                placeholder="Example: Sprint planning document"
+                required
+              />
+            </label>
+
+            <div class="form-row">
+              <label>
+                <span>Type</span>
+                <select id="typeInput" name="type" required>
+                  <option value="Document">Document</option>
+                  <option value="Link">Link</option>
+                  <option value="Checklist">Checklist</option>
+                  <option value="Repository">Repository</option>
+                  <option value="Note">Note</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Owner</span>
+                <input
+                  id="ownerInput"
+                  name="owner"
+                  type="text"
+                  placeholder="Example: DevOps Team"
+                  required
+                />
+              </label>
+            </div>
+
+            <label>
+              <span>URL</span>
+              <input
+                id="urlInput"
+                name="url"
+                type="url"
+                placeholder="https://example.com"
+              />
+            </label>
+
+            <label>
+              <span>Description</span>
+              <textarea
+                id="descriptionInput"
+                name="description"
+                rows="5"
+                placeholder="Explain what this resource is used for..."
+                required
+              ></textarea>
+            </label>
+
+            <button class="button button-primary full-width" type="submit">
+              Share resource
+            </button>
+          </form>
+
+          <p id="formMessage" class="form-message"></p>
+
+          <div class="quick-tips">
+            <h3>CloudMind test signals</h3>
+            <ul>
+              <li>Health endpoint is exposed at <code>/api/status</code>.</li>
+              <li>The backend listens on <code>0.0.0.0:3000</code>.</li>
+              <li>The app uses plain Node.js with no dependencies.</li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="library-panel">
+          <div class="library-header">
+            <div>
+              <p class="eyebrow">Library</p>
+              <h2>Shared resources</h2>
+            </div>
+
+            <span id="shareCountBadge" class="badge">0 items</span>
+          </div>
+
+          <div class="toolbar">
+            <div class="search-box">
+              <span>⌕</span>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="Search by title, owner, type, or description..."
+              />
+            </div>
+
+            <select id="filterInput" class="filter-select" aria-label="Filter by type">
+              <option value="All">All types</option>
+              <option value="Document">Documents</option>
+              <option value="Link">Links</option>
+              <option value="Checklist">Checklists</option>
+              <option value="Repository">Repositories</option>
+              <option value="Note">Notes</option>
+            </select>
+          </div>
+
+          <div id="shareList" class="share-list"></div>
+        </section>
+
+        <aside class="activity-panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Activity</p>
+              <h2>Workspace feed</h2>
+            </div>
+          </div>
+
+          <div id="activityFeed" class="activity-feed"></div>
+        </aside>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
